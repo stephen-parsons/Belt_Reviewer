@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add Book and Review</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<!-- Popper JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="header" style="display: flex; justify-content: space-between;">
+			<h4>Logged in as {{user.first_name}}</h4>
+			<div>
+			<a href="/books"><button>Home</button></a>
+			<a href="/logout"><button>Logout</button></a>
+			</div>
+		</div>
+		<div class="content">
+			<h1>Add a new Book Title and a Review</h1>
+			<form action="/books/process" method="post" id="books_process">
+				{% csrf_token %}
+				<div class="form-group">
+				Book Title: <input type="text" name="name">
+				</div>
+				Author: <br>
+					<div class="form-group">
+					Choose from the list: <select name="author_list" form="books_process">
+					<option value="" selected hidden>Choose here</option>
+					{% for author in authors %}
+					<option value="{{author.id}}">{{author.first_name}} {{author.last_name}}</option>
+					{% endfor %}
+					</select>
+					</div>
+					<div class="form-group">
+					Or add a new author: <input type="text" name="author_text">
+					</div>
+				<div class="form-group">	
+				Review: <textarea name="review"></textarea>	
+				</div>
+				<div class="form-group">
+				Rating: <select name="rating">
+						<option value="" selected hidden>Choose here</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						</select>
+				</div>			
+				<div class="form-group">		
+				<input type="submit" name="submit" value="Add Book and Review">	
+				{% if messages %}
+					<ul class="flash">
+						{% for message in messages %}
+							<li>{{ message }}</li>
+						{% endfor %}
+					</ul>
+				{% endif %}
+				</div>	
+			</form>
+		</div>
+	</div>
+</body>
+</html>

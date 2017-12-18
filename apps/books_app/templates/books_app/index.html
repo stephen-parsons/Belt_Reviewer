@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Books</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<!-- Popper JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="header" style="display: flex; justify-content: space-between;">
+			<h4>Welcome {{user.first_name}}</h4>
+			<div>
+			<a href="books/add"><button>Add Book and Review</button></a>
+			<a href="/logout"><button>Logout</button></a>
+			</div>
+		</div>
+		<div>
+			<h3>Recent Book Reviews:</h3>
+			{% for review in reviews.all %}
+				<h4><a href="/books/{{review.book.id}}">{{review.book.name}}</a></h4>
+				<ul>
+					<p>Rating: {{review.rating}}</p>
+					<p><a href="/users/{{review.user.id}}">{{review.user.first_name}}</a> says: {{review.content}}</p>
+					<p>{{review.created_at}}</p>
+				</ul>
+				<br>
+			{% endfor %}
+		</div>
+		<div>
+			<h3>Other Books with Reviews:</h3>
+			<ul>
+				{% for book in books %}
+					<li><p><a href="/books/{{book.id}}">{{ book.name }}</a></p></li>
+				{% endfor %}	
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add Book and Review</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<!-- Popper JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="header" style="display: flex; justify-content: space-between;">
+			<h4>Logged in as {{user.first_name}}</h4>
+			<div>
+			<a href="/books"><button>Home</button></a>
+			<a href="/logout"><button>Logout</button></a>
+			</div>
+		</div>
+		<div>
+			<h3>{{book.name}}</h3>
+			{% for author in book.authors.all %}
+			<p>Author: {{author.first_name}} {{author.last_name}}</p>
+			{% endfor %}
+			<h3>Reviews:</h3>
+			{% for review in book.reviews.all %}
+				<ul>
+					<p>Rating: {{review.rating}}</p>
+					<p><a href="/users/{{review.user.id}}">{{review.user.first_name}}</a> says: {{review.content}}</p>
+					<p>{{review.created_at}}</p>
+					{% if review.user.id == user.id %}
+					<a href="/books/reviews/delete/{{book.id}}/{{review.id}}"><button>Delete review</button></a>
+					{% endif %}
+				</ul>
+				{% endfor %}
+		</div>
+		<div>
+			<h3>Add a review:</h3>
+			<form action="/books/reviews/{{book.id}}" method="post">
+				{% csrf_token %}
+				<div class="form-group">	
+				Review: <textarea name="review"></textarea>	
+				</div>
+				<div class="form-group">
+				Rating: <select name="rating">
+						<option value="" selected hidden>Choose here</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						</select>
+				</div>			
+				<div class="form-group">		
+				<input type="submit" name="submit" value="Add Review">
+			</form>
+		</div>
+	</div>
+</body>
+</html>

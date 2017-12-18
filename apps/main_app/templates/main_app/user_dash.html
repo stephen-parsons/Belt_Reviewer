@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>User Reviews</title>
+<!-- 	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'main_app/css/style.css' %}"> -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<!-- Popper JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="header" style="display: flex; float: right;">
+			<a href="/books"><button>Home</button></a>
+			<a href="/books/add"><button>Add Book and Review</button></a>
+			<a href="/logout"><button>Logout</button></a>
+		</div>
+		<div>
+			<h1>User: {{user.first_name}}</h1>
+			<h3>Name: {{user.first_name}} {{user.last_name}}</h3>
+			<h3>Email: {{user.email}}</h3>
+			<h3>Total Reviews: {{ user.books.reviews.count }}</h3><br><br>
+			<h2>Posted reviews on the following books:</h2>
+			<ul>
+				{% for review in user.reviews.all %}
+					<li><h3><a href="/books/{{review.book.id}}">{{ review.book.name }}</a></h3></li>
+				{% endfor %}
+			</ul>
+		</div>	
+	</div>
+</body>
+</html>
