@@ -54,5 +54,5 @@ def user_dash(request, id):
 	if 'user_id' not in request.session:
 		return redirect('/')
 	else:	
-		user = Users.objects.get(id=request.session['user_id'])
+		user = Users.objects.get(id=id)
 		return render(request, "main_app/user_dash.html", {'user' : user})		
